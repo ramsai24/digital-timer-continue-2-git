@@ -1,0 +1,107 @@
+/* Write your CSS here */
+.app-container {
+  background-image: linear-gradient(to right, #ffffff, #cffcf1, #cffcf1);
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
+.bg-container {
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+  width: 80%;
+  border: 1px solid orange;
+}
+.timer-displayer-start-or-pause-reset-set-timer-limit-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
+@media screen and (max-width: 576px) {
+  .timer-displayer-start-or-pause-reset-set-timer-limit-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+}
+
+.timer-displayer-container {
+  background-image: url('https://assets.ccbp.in/frontend/react-js/digital-timer-elapsed-bg.png');
+  height: 400px;
+  width: 500px;
+  display: flex;
+  background-position: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid red;
+  margin-right: 30px;
+}
+.timer-container {
+  background-color: #ffffff;
+  width: 170px;
+  height: 170px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 120px;
+}
+
+.start-or-pause-reset-set-timer-limit-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px;
+  border: 2px solid seagreen;
+  width: 300px;
+}
+
+.start-or-pause-and-reset-container {
+  display: flex;
+  border: 1px solid saddlebrown;
+  width: 80%;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.start-or-pause-container {
+  display: flex;
+  border: 1px solid magenta;
+  min-width: 120px;
+  justify-content: center;
+}
+.btn-start-pause-reset {
+  border: none;
+  background-color: transparent;
+}
+.img {
+  width: 20px;
+  height: 20px;
+}
+
+.set-timer-limit-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid blue;
+}
+.set-timer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid pink;
+  width: 150px;
+}
+.plus-or-minus {
+  font-size: 40px;
+}
