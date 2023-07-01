@@ -1,5 +1,3 @@
-// Write your code here
-
 import {Component} from 'react'
 import './index.css'
 
@@ -9,10 +7,10 @@ class DigitalTimer extends Component {
     this.state = {
       minutes: 25,
       seconds: '00',
-      timer: 25,
+      timer: '25',
       startOrPause: true,
-      sec: 60,
-      min: 25,
+      sec: 15,
+
       pause: true,
     }
   }
@@ -39,7 +37,7 @@ class DigitalTimer extends Component {
   }
 
   time = () => {
-    const {sec, seconds, min, startOrPause} = this.state
+    const {minutes, seconds, timer, startOrPause} = this.state
     // console.log(startOrPause)
     // if (sec === 60) {
     //   this.setState(prev => ({
@@ -49,63 +47,42 @@ class DigitalTimer extends Component {
     //  console.log(sec.toString().length === 1)
     // console.log(`min value : ${min} ,type:${typeof min}`)
 
-    if (!startOrPause) {
-      if (min <= 10 && sec <= 60) {
-        this.setState(prev => ({
-          min: `0${parseInt(prev.min)}`,
-          timer: `0${parseInt(prev.min)}`,
-        }))
-        console.log('state 1')
-      }
+    // console.log(seconds, timer)
+    console.log('timer is running')
 
-      if (min === '00' && seconds === '00') {
-        console.log('entered')
-        this.setState({timer: '00', sec: '00', seconds: '00'})
-      } else if (sec <= 10) {
-        this.setState(prev => ({
-          seconds: `0${sec - 1}`,
-          sec: prev.sec - 1,
-        }))
-        console.log('state 3')
-      } else if (sec === 0) {
-        if (min <= 10) {
-          this.setState({min: `0${parseInt(min) - 1}`, sec: 59})
-        }
-        this.setState({
-          sec: 60,
-          //   min: min - 1,
-        })
-        console.log('state 2')
+    if (!startOrPause) {
+      if (seconds === '00' && timer === '00') {
+        this.setState({seconds: '00', timer: minutes, startOrPause: true})
       } else {
-        if (min <= 10) {
+        if (seconds === '00' && timer > 10) {
+          this.setState(prev => ({seconds: 60, timer: prev.timer - 1}))
+        }
+
+        if (timer <= 10 && seconds === '00') {
           this.setState(prev => ({
-            seconds: prev.sec - 1,
-            sec: prev.sec - 1,
-            min: `0${parseInt(prev.min)}`,
-            timer: `0${parseInt(prev.min)}`,
+            timer: `0${prev.timer - 1}`,
+            seconds: 59,
           }))
         } else {
-          this.setState(prev => ({
-            seconds: prev.sec - 1,
-            sec: prev.sec - 1,
-            timer: min,
-          }))
+          console.log(minutes)
+          if (seconds <= 60) {
+            if (seconds <= 10 && seconds >= 1) {
+              this.setState(prev => ({seconds: `0${prev.seconds - 1}`}))
+            } else {
+              this.setState(prev => ({seconds: prev.seconds - 1}))
+            }
+          }
         }
-
-        console.log('state 4')
       }
     }
-    //  else {
-    //   // this.setState(prev => ({startOrPause: !prev.startOrPause}))
-    // }
   }
 
   plusClick = () => {
-    const {minutes} = this.state
-    if (parseInt(minutes) <= 10) {
+    const {timer, minutes} = this.state
+    if (parseInt(timer) < 9) {
       this.setState({
         minutes: `0${parseInt(minutes) + 1}`,
-        timer: `0${parseInt(minutes) + 1}`,
+        timer: `0${parseInt(timer) + 1}`,
         // min: `0${parseInt(prev.minutes) + 1}`,
         // minutes: `0${parseInt(prev.minutes) + 1}`,
         // timer: `0${parseInt(prev.minutes) + 1}`,
@@ -122,29 +99,36 @@ class DigitalTimer extends Component {
 
   minusClick = () => {
     //  const {minutes} = this.state
-    const {minutes} = this.state
-    if (parseInt(minutes) <= 10) {
-      this.setState(prev => ({
-        minutes: `0${parseInt(prev.minutes) - 1}`,
-        timer: `0${parseInt(prev.minutes) - 1}`,
-      }))
+    const {timer} = this.state
+    console.log(timer)
+    if (parseInt(timer) === 0) {
+      this.setState({timer: '00'})
     } else {
-      this.setState(prev => ({
-        minutes: parseInt(prev.minutes) - 1,
-        timer: parseInt(prev.minutes) - 1,
-      }))
+      console.log(timer)
+      if (parseInt(timer) <= 10 && parseInt(timer) > 0) {
+        this.setState(prev => ({
+          minutes: `0${parseInt(prev.minutes) - 1}`,
+          timer: `0${parseInt(prev.minutes) - 1}`,
+        }))
+      } else {
+        this.setState(prev => ({
+          minutes: parseInt(prev.minutes) - 1,
+          timer: parseInt(prev.minutes) - 1,
+        }))
+      }
     }
   }
 
   start = () => {
     this.setState(prev => ({
       startOrPause: !prev.startOrPause,
-      min: prev.timer - 1,
+
       pause: false,
     }))
   }
 
   pause = () => {
+    //  this.clearInterval(this.timerId)
     const {minutes, seconds, sec} = this.state
     this.setState(prev => ({
       startOrPause: !prev.startOrPause,
@@ -165,7 +149,7 @@ class DigitalTimer extends Component {
       startOrPause: true,
       pause: true,
     })
-    // clearInterval(this.timeId)
+    clearInterval(this.timeId)
   }
 
   render() {
@@ -173,7 +157,7 @@ class DigitalTimer extends Component {
 
     // console.log(sec.toString().length)
     // console.log(startOrPause)
-    console.log(timer, seconds)
+    // console.log(timer, seconds)
 
     return (
       <div className="app-container">
@@ -201,27 +185,33 @@ class DigitalTimer extends Component {
                           alt="play icon"
                           src="https://assets.ccbp.in/frontend/react-js/play-icon-img.png"
                         />
-                        <p>Start</p>
+                        Start
                       </button>
                     </div>
                   ) : (
                     <div className="start-or-pause-container">
-                      <button className="btn-start-pause-reset" type="button">
+                      <button
+                        className="btn-start-pause-reset"
+                        onClick={this.pause}
+                        type="button"
+                      >
                         <img
                           className="img"
                           alt="pause icon"
-                          onClick={this.pause}
                           src="https://assets.ccbp.in/frontend/react-js/pause-icon-img.png"
                         />
-                        <p>Pause</p>
+                        Pause
                       </button>
                     </div>
                   )}
                 </div>
                 <div className="reset-container start-or-pause-container">
-                  <button type="button" className="btn-start-pause-reset">
+                  <button
+                    onClick={this.reset}
+                    type="button"
+                    className="btn-start-pause-reset"
+                  >
                     <img
-                      onClick={this.reset}
                       className="img"
                       alt="reset icon"
                       src="https://assets.ccbp.in/frontend/react-js/reset-icon-img.png"
